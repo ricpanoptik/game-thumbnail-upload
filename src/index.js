@@ -97,11 +97,11 @@ const failedUpdateGames = [
 (async () => {
     try {
         const allGames = fs.readFileSync(path.join(__dirname, 'data', 'games.json'), 'utf-8');
-        const games = JSON.parse(allGames)
-            .filter(g => failedUpdateGames.includes(g.code)); // comment this line to update all games
+        // get games without thumbnailPath
+        const games = JSON.parse(allGames).filter(g => !g.thumbnailPath && !g.isActive);
 
         // Uncomment the line below to test with a smaller subset of games
-        //games.splice(10, games.length);
+        games.splice(10, games.length);
 
         for (const game of games) {
             const gameThumbnail = getByGameTypeID(game.gameTypeID, game.code);
